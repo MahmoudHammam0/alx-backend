@@ -37,13 +37,7 @@ class Server:
         assert type(page_size) == int
         assert page_size > 0
         indices = index_range(page, page_size)
-        result = []
-        with open('Popular_Baby_Names.csv', 'r') as f:
-            reader = csv.reader(f)
-            for i, row in enumerate(reader):
-                if i <= indices[0]:
-                    continue
-                if i > indices[1]:
-                    break
-                result.append(row)
-        return result
+        data = self.dataset()
+        if indices[0] >= len(data):
+            return []
+        return data[indices[0]:indices[1]]
