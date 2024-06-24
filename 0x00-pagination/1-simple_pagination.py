@@ -38,7 +38,7 @@ class Server:
         assert page_size > 0
         indices = index_range(page, page_size)
         result = []
-        with open('Popular_Baby_Names.csv', 'r')  as f:
+        with open('Popular_Baby_Names.csv', 'r') as f:
             reader = csv.reader(f)
             for i, row in enumerate(reader):
                 if i <= indices[0]:
