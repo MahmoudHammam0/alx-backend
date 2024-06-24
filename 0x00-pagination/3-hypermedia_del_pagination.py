@@ -43,25 +43,23 @@ class Server:
         """ return dictionary with index, next index, data, page size """
         if index is None:
             index = 0
-
-        # validate the index
         assert isinstance(index, int)
         assert 0 <= index < len(self.indexed_dataset())
         assert isinstance(page_size, int) and page_size > 0
-
-        data = []  # collect all indexed data
+        data = []
         next_index = index + page_size
-
-        for value in range(index, next_index):
-            if self.indexed_dataset().get(value):
-                data.append(self.indexed_dataset()[value])
+        for key in range(index, next_index):
+            if self.indexed_dataset().get(key):
+                data.append(self.indexed_dataset()[key])
             else:
-                value += 1
                 next_index += 1
+                key += 1
 
-        return {
+        res = {
             'index': index,
             'data': data,
             'page_size': page_size,
             'next_index': next_index
         }
+
+        return res
