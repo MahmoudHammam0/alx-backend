@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""" LRU Caching """
+""" LRU Caching module """
 BaseCaching = __import__('base_caching').BaseCaching
 
 
