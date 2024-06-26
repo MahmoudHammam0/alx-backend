@@ -21,7 +21,8 @@ class LRUCache(BaseCaching):
         self.cache_data[key] = item
         if key in self.record:
             idx = self.record.index(key)
-            self.record[-1], self.record[idx] = self.record[idx], self.record[-1]
+            self.record[-1], self.record[idx] =\
+                self.record[idx], self.record[-1]
         else:
             self.record.append(key)
 
