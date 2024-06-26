@@ -1,46 +1,35 @@
 #!/usr/bin/env python3
-""" LRUCache module """
-from base_caching import BaseCaching
+""" LRU Caching module """
+BaseCaching = __import__('base_caching').BaseCaching
 
 
 class LRUCache(BaseCaching):
-    """ Least Recently Used caching system """
-
+    """ inherits from BaseCaching """
     def __init__(self):
-        """ initialisation """
+        """ Initiliaze """
         super().__init__()
-        # list of the keys from LRU to MRU
-        self.cache_list = []
+        self.record = []
 
     def put(self, key, item):
-        """ assigns to the dictionary the item value for the key key """
+        """ Add an item in the cache """
         if key is None or item is None:
             return
-
-        if key in self.cache_list:
-            # remove key to update its position later
-            self.cache_list.remove(key)
-
+        if len(self.cache_data.keys()) >= BaseCaching.MAX_ITEMS:
+            print("DISCARD: {}".format(self.record[0]))
+            self.cache_data.pop(self.record[0])
+            self.record.pop(0)
         self.cache_data[key] = item
-
-        # put the recently visited item at the end
-        self.cache_list.append(key)
-
-        if len(self.cache_data) > BaseCaching.MAX_ITEMS:
-            # get the key of the least recently used item
-            del_key = self.cache_list.pop(0)
-            # delete the item
-            self.cache_data.pop(del_key)
-            print("DISCARD:", del_key)
+        if key in self.record:
+            idx = self.record.index(key)
+            self.record[-1], self.record[idx] =\
+                self.record[idx], self.record[-1]
+        else:
+            self.record.append(key)
 
     def get(self, key):
-        """ returns the value in the dictionary that is linked to key """
+        """ Get an item by key """
         if key is None or key not in self.cache_data.keys():
             return None
-
-        # update the order of the list by putting the most visited item in top
-        if key in self.cache_list:
-            self.cache_list.remove(key)
-            self.cache_list.append(key)
-
-        return self.cache_data.get(key)
+        idx = self.record.index(key)
+        self.record[-1], self.record[idx] = self.record[idx], self.record[-1]
+        return self.cache_data[key]
