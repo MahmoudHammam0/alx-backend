@@ -14,11 +14,11 @@ class LRUCache(BaseCaching):
         """ Add an item in the cache """
         if key is None or item is None:
             return
-        if len(self.cache_data.keys()) >= BaseCaching.MAX_ITEMS:
+        self.cache_data[key] = item
+        if len(self.cache_data.keys()) > BaseCaching.MAX_ITEMS:
             print("DISCARD: {}".format(self.record[0]))
             self.cache_data.pop(self.record[0])
             self.record.pop(0)
-        self.cache_data[key] = item
         if key in self.record:
             idx = self.record.index(key)
             self.record[-1], self.record[idx] =\
