@@ -15,11 +15,8 @@ class LRUCache(BaseCaching):
         if key is None or item is None:
             return
         if key in self.record:
-            idx = self.record.index(key)
-            self.record[-1], self.record[idx] =\
-                self.record[idx], self.record[-1]
-        else:
-            self.record.append(key)
+            self.record.remove(key)
+        self.record.append(key)
         self.cache_data[key] = item
         if len(self.cache_data.keys()) > BaseCaching.MAX_ITEMS:
             print("DISCARD: {}".format(self.record[0]))
@@ -31,7 +28,6 @@ class LRUCache(BaseCaching):
         if key is None or key not in self.cache_data.keys():
             return None
         if key in self.record:
-            idx = self.record.index(key)
-            self.record[-1], self.record[idx] =\
-                self.record[idx], self.record[-1]
+            self.record.remove(key)
+            self.record.append(key)
         return self.cache_data[key]
