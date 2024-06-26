@@ -30,6 +30,8 @@ class LRUCache(BaseCaching):
         """ Get an item by key """
         if key is None or key not in self.cache_data.keys():
             return None
-        idx = self.record.index(key)
-        self.record[-1], self.record[idx] = self.record[idx], self.record[-1]
+        if key in self.record:
+            idx = self.record.index(key)
+            self.record[-1], self.record[idx] =\
+                self.record[idx], self.record[-1]
         return self.cache_data[key]
