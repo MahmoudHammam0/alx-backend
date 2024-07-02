@@ -4,7 +4,6 @@ from flask import Flask, render_template, request, g
 from flask_babel import Babel
 
 
-
 class Config:
     """ configurations class """
     LANGUAGES = ["en", "fr"]
@@ -31,6 +30,7 @@ def get_locale():
         return lang
     return request.accept_languages.best_match(app.config["LANGUAGES"])
 
+
 def get_user():
     """ return the dict of the user """
     login = request.args.get("login_as")
@@ -38,10 +38,12 @@ def get_user():
         return users[int(login)]
     return None
 
+
 @app.before_request
 def before_request():
     """ use get_user to find a user if any, and set it as a global user """
     g.user = get_user()
+
 
 @app.route('/')
 def index():
