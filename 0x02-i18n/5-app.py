@@ -34,7 +34,7 @@ def get_locale():
 def get_user():
     """ return the dict of the user """
     login = request.args.get("login_as")
-    if login is not None and int(login) in users.keys():
+    if login:
         return users[int(login)]
     return None
 
