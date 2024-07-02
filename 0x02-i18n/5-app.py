@@ -40,7 +40,7 @@ def get_user():
 
 
 @app.before_request
-def before_request():
+def before_request() -> None:
     """ use get_user to find a user if any, and set it as a global user """
     g.user = get_user()
 
